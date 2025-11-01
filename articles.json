@@ -1,0 +1,59 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-10-31T00:00:00Z",
+  "articles": [
+    {
+      "id": "article-001",
+      "title": "Getting Started with SwiftUI",
+      "slug": "getting-started-swiftui",
+      "summary": "Learn the fundamentals of SwiftUI and build your first iOS app with declarative syntax.",
+      "content": "# Getting Started with SwiftUI\n\nSwiftUI is Apple's modern framework for building user interfaces across all Apple platforms.\n\n## Why SwiftUI?\n\n- **Declarative Syntax**: Describe what your UI should do, not how to do it\n- **Live Preview**: See changes instantly without recompiling\n- **Cross-Platform**: Write once, run on iOS, macOS, watchOS, and tvOS\n\n## Your First View\n\n```swift\nstruct ContentView: View {\n    var body: some View {\n        Text(\"Hello, SwiftUI!\")\n            .font(.largeTitle)\n            .foregroundColor(.blue)\n    }\n}\n```\n\nThis simple code creates a text view with custom styling.\n\n## Key Concepts\n\n1. **Views**: Everything is a view\n2. **State**: Use @State for local state management\n3. **Binding**: Use @Binding to share state\n4. **ObservableObject**: For complex state management\n\nStart building amazing apps today!",
+      "author": "Sarah Johnson",
+      "category": "Mobile",
+      "tags": ["SwiftUI", "iOS", "Tutorial", "Beginner"],
+      "readingMinutes": 5,
+      "date": "2025-10-30T10:00:00Z",
+      "featured": true
+    },
+    {
+      "id": "article-002",
+      "title": "Mastering Async/Await in Swift",
+      "slug": "mastering-async-await-swift",
+      "summary": "Deep dive into Swift's modern concurrency model with async/await and structured concurrency.",
+      "content": "# Mastering Async/Await in Swift\n\nSwift 5.5 introduced a revolutionary concurrency model that makes asynchronous code cleaner and safer.\n\n## The Old Way\n\n```swift\nfetchUser(id: 123) { user in\n    fetchPosts(userId: user.id) { posts in\n        updateUI(with: posts)\n    }\n}\n```\n\n## The New Way\n\n```swift\nlet user = await fetchUser(id: 123)\nlet posts = await fetchPosts(userId: user.id)\nawait updateUI(with: posts)\n```\n\nMuch cleaner and easier to read!\n\n## Key Benefits\n\n- **No Callback Hell**: Linear code flow\n- **Error Handling**: Use try/catch naturally\n- **Structured Concurrency**: Task hierarchies\n- **Cancellation**: Automatic task cancellation\n\n## Practical Example\n\n```swift\nfunc loadContent() async throws {\n    async let user = fetchUser()\n    async let settings = fetchSettings()\n    \n    let (userData, userSettings) = try await (user, settings)\n    // Use both values here\n}\n```\n\nThis runs both requests in parallel and waits for both to complete.\n\nStart using async/await in your apps today!",
+      "author": "Michael Chen",
+      "category": "Mobile",
+      "tags": ["Swift", "Async", "Concurrency", "iOS"],
+      "readingMinutes": 8,
+      "date": "2025-10-29T14:30:00Z",
+      "featured": false
+    },
+    {
+      "id": "article-003",
+      "title": "Building RESTful APIs with Node.js",
+      "slug": "building-restful-apis-nodejs",
+      "summary": "Complete guide to creating scalable REST APIs using Node.js, Express, and MongoDB.",
+      "content": "# Building RESTful APIs with Node.js\n\nLearn how to build production-ready REST APIs using the most popular JavaScript backend stack.\n\n## Setup\n\n```bash\nnpm init -y\nnpm install express mongoose dotenv\n```\n\n## Basic Server\n\n```javascript\nconst express = require('express');\nconst app = express();\n\napp.use(express.json());\n\napp.get('/api/users', async (req, res) => {\n    const users = await User.find();\n    res.json(users);\n});\n\napp.listen(3000, () => {\n    console.log('Server running on port 3000');\n});\n```\n\n## Best Practices\n\n1. **Use environment variables** for configuration\n2. **Validate input** with middleware like Joi\n3. **Handle errors** with custom error handlers\n4. **Use async/await** for cleaner code\n5. **Add authentication** with JWT tokens\n\n## Project Structure\n\n```\n/src\n  /routes\n  /controllers\n  /models\n  /middleware\n  /utils\nserver.js\n```\n\nKeep your code organized for better maintainability!",
+      "author": "David Martinez",
+      "category": "Backend",
+      "tags": ["Node.js", "Express", "REST", "API", "MongoDB"],
+      "readingMinutes": 12,
+      "date": "2025-10-28T09:00:00Z",
+      "featured": true
+    },
+    {
+      "id": "article-004",
+      "title": "Building a Modern iOS News App with SwiftUI",
+      "slug": "building-modern-ios-news-app-swiftui",
+      "summary": "Step-by-step guide to creating a professional news reader app with SwiftUI, featuring interactive gestures, animations, and content management.",
+      "content": "# Building a Modern iOS News App with SwiftUI\n\nLearn how to build a production-ready news app with all the features users expect from modern iOS applications.\n\n## Key Features\n\n### Interactive Gestures\n- **Pull-to-refresh**: Swipe down to update content\n- **Swipe actions**: Bookmark and share with gestures\n- **Long-press previews**: Quick article previews\n\n### Professional UI\n```swift\nstruct ArticleCard: View {\n    let article: Article\n    \n    var body: some View {\n        VStack(alignment: .leading) {\n            Text(article.title)\n                .font(.headline)\n            Text(article.summary)\n                .font(.subheadline)\n                .foregroundColor(.gray)\n        }\n        .padding()\n    }\n}\n```\n\n### Content Management\n\nUse a JSON-based system for easy updates:\n\n```json\n{\n  \"articles\": [\n    {\n      \"id\": \"article-001\",\n      \"title\": \"Your Article\",\n      \"content\": \"Article content...\"\n    }\n  ]\n}\n```\n\n## Performance Optimizations\n\n1. **Caching**: Store articles locally\n2. **Lazy Loading**: Load content as needed\n3. **Efficient State Management**: Use @StateObject and @Published\n\n## Best Practices\n\n- Use **computed properties** wisely (avoid recalculations)\n- Implement **proper error handling**\n- Add **haptic feedback** for better UX\n- Support **dark mode** out of the box\n\n## Architecture\n\n```swift\nclass ContentManager: ObservableObject {\n    @Published var articles: [Article] = []\n    \n    func loadArticles() {\n        // Load from JSON\n    }\n}\n```\n\n## Daily Updates\n\nUpdate your content by simply replacing the JSON file:\n\n1. Edit `articles.json`\n2. Add new articles\n3. Rebuild and deploy\n\nNo code changes needed!\n\n## Result\n\nA beautiful, fast, and maintainable news app that:\n- ✅ Loads instantly\n- ✅ Works offline\n- ✅ Easy to update\n- ✅ Professional quality\n\nStart building your own news app today!",
+      "author": "HelpAGI Team",
+      "category": "Mobile",
+      "tags": ["SwiftUI", "iOS", "Tutorial", "News App", "Content Management"],
+      "readingMinutes": 6,
+      "date": "2025-10-31T16:00:00Z",
+      "featured": true
+    }
+  ]
+}
+
