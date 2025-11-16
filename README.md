@@ -5,7 +5,7 @@ This repository contains the unified blog content for HelpAGI, served via GitHub
 ## Structure
 
 - `articles.json` - All blog posts as a single JSON array (used by web + iOS)
-- `images/` - Blog post images (optional)
+- `images/` - Auto-generated lightweight hero images (one per post)
 
 ## GitHub Pages Setup
 
