@@ -36,6 +36,18 @@ if ! command -v claude >/dev/null 2>&1; then
     exit 1
 fi
 
+# --- Bootstrap the validator's venv if missing -------------------------------
+# The agent calls scripts/pipeline/.venv/bin/python3 -m tools.validate_article.
+# Without the venv, the validator can't import jsonschema and every article
+# would be dropped.
+VENV_DIR="scripts/pipeline/.venv"
+if [ ! -x "$VENV_DIR/bin/python3" ]; then
+    echo "→ Creating validator venv at $VENV_DIR…"
+    python3 -m venv "$VENV_DIR"
+    "$VENV_DIR/bin/pip" install --upgrade pip >/dev/null
+    "$VENV_DIR/bin/pip" install -r scripts/pipeline/requirements.txt >/dev/null
+fi
+
 # --- Refresh yt-dlp ----------------------------------------------------------
 # YouTube ships scraper-defeating changes every few weeks. Always run latest.
 echo "→ Updating yt-dlp…"

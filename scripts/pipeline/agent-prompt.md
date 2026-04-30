@@ -17,13 +17,15 @@ You run inside the `helpagi-content/` git repo. All paths below are relative to 
 
 If `dry_run` is `true`:
 - Write each candidate article to `_proposed/<YYYY-MM-DD>/<slug>.json`.
-- Commit and push, but do NOT modify `articles.json`.
+- Commit locally so the user can review with `git log` / `git show`.
+- **Do NOT push.** The user reviews proposals locally; they push manually once satisfied.
+- Do NOT modify `articles.json`.
 
 If `dry_run` is `false`:
 - Append each validated article to `articles.json`'s `articles[]` array, update `lastUpdated` and `version`.
 - Save thumbnails to `images/<slug>.jpg`.
 - Update `.pipeline-state.json` (append video ID, set `last_run`).
-- Commit and push.
+- Commit and push to `origin main` (this is what makes GitHub Pages redeploy and the iOS app see new content).
 
 ## Procedure
 
@@ -75,10 +77,14 @@ Mandatory pieces:
 
 ### 4. Validate
 
+The validator depends on `jsonschema`, which is installed in the pipeline's local venv at `scripts/pipeline/.venv/`. **Do not** call system `python3 -m tools.validate_article …` — it won't find the dependency. Use the venv's Python directly:
+
 ```bash
-cd scripts/pipeline
-python3 -m tools.validate_article <path/to/article.json>
+cd scripts/pipeline && \
+  .venv/bin/python3 -m tools.validate_article <absolute/or/repo-relative/path/to/article.json>
 ```
+
+Each Bash invocation is a fresh shell, so include the `cd && …` in the same command line. Pass the article path as either absolute (preferred) or relative to `helpagi-content/`.
 
 If the validator returns a non-zero exit code, **drop this article and continue to the next candidate.** Log the reason. Do not block the run.
 
@@ -98,9 +104,9 @@ Verify the file size > 1 KB. If both fail, drop the article.
 If `dry_run`:
 
 ```bash
-git add _proposed/ images/ .pipeline-state.json
+git add _proposed/ scripts/pipeline/.pipeline-state.json
 git commit -m "auto: <N> proposed articles for review (dry run)"
-git push origin main
+# Do NOT push. The user reviews _proposed/<date>/ locally.
 ```
 
 If live:
