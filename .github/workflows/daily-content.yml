@@ -1,0 +1,50 @@
+name: Daily Content Pipeline
+
+on:
+  schedule:
+    # Daily at 02:00 UTC. Pacific evening uploads have settled by then.
+    - cron: '0 2 * * *'
+  workflow_dispatch: {}  # allow manual trigger from the Actions tab
+
+permissions:
+  contents: write   # needed for the agent's git push
+
+concurrency:
+  group: daily-content
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout helpagi-content
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git author
+        run: |
+          git config user.name "helpagi-bot"
+          git config user.email "helpagi-bot@users.noreply.github.com"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r scripts/pipeline/requirements.txt
+          pip install --upgrade yt-dlp
+
+      - name: Run pipeline agent
+        uses: anthropics/claude-code-action@v1
+        with:
+          oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt-file: scripts/pipeline/agent-prompt.md
+          allowed-tools: Bash,Read,Write,Edit
+          working-directory: ${{ github.workspace }}
