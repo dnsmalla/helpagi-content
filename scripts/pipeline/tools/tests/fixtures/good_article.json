@@ -1,0 +1,29 @@
+{
+  "slug": "what-is-agi-explained-2026",
+  "title": "What Is AGI? A Plain-English Explainer for 2026",
+  "date": "2026-04-30T03:00:00Z",
+  "summary": "Artificial general intelligence (AGI) means a system that can learn any intellectual task a human can. This piece breaks down current research progress, where the term comes from, and why definitions still vary.",
+  "content": "## What AGI actually means\n\nArtificial general intelligence describes a hypothetical AI system that can learn or perform any intellectual task that a human being can. The term has been used inconsistently for decades, which is part of why current debates feel so confusing. In the video, the host walks through several mainstream definitions, including the OpenAI charter version and DeepMind's task-coverage framing.\n\n## Why definitions still vary\n\nResearchers disagree on whether AGI requires consciousness, embodiment, or merely matching human performance on a broad set of benchmarks. The video makes the case that benchmark-based definitions are easier to falsify but tend to drift as benchmarks saturate. Each new generation of model raises the floor of what humans expect from a system before they call it general.\n\n## The progress signals to watch\n\nThree practical signals are highlighted: transfer learning to genuinely novel tasks without retraining, sustained agentic behavior over long horizons, and the ability to learn new skills from a handful of examples in domains the model has never seen. None of those is sufficient on its own, but the host argues that progress on all three at once is the clearest evidence we've moved closer to general capability.\n\n## What this means for builders\n\nFor application engineers, the takeaway is to design systems that gracefully degrade when the model is wrong, log what tasks the model fails on, and treat improving capability as a moving baseline rather than a one-time integration. The video closes with a reminder that the AGI label matters less than the engineering posture.\n\n## Source\n\nThis article summarizes [\"What Is AGI? A 2026 Update\"](https://www.youtube.com/watch?v=dQw4w9WgXcQ) by Matt Wolfe (@mreflow). Watch the original for the full discussion and citations.",
+  "author": "HelpAGI Editorial Team",
+  "category": "AGI",
+  "tags": ["AGI", "AI research", "definitions", "benchmarks", "transfer learning"],
+  "readingMinutes": 6,
+  "focusKeyword": "AGI definition",
+  "keywords": ["AGI", "artificial general intelligence", "definition", "benchmarks"],
+  "contentType": "explainer",
+  "mainTopic": "Artificial General Intelligence",
+  "complexity": "intermediate",
+  "audience": "AI-curious engineers and product builders",
+  "optimizedForScoring": true,
+  "scoringVersion": "2.0",
+  "sourceVideo": {
+    "id": "dQw4w9WgXcQ",
+    "title": "What Is AGI? A 2026 Update",
+    "channel": "Matt Wolfe",
+    "channelHandle": "@mreflow",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "publishedAt": "2026-04-29T18:30:00Z",
+    "durationSeconds": 720
+  },
+  "imageUrl": "https://dnsmalla.github.io/helpagi-content/images/what-is-agi-explained-2026.jpg"
+}

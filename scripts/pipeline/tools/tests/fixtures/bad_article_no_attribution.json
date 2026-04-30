@@ -1,0 +1,29 @@
+{
+  "slug": "no-attribution-article",
+  "title": "An article that forgot to credit the source",
+  "date": "2026-04-30T03:00:00Z",
+  "summary": "This is a long-enough summary string that meets the schema's minimum-length requirement of forty characters.",
+  "content": "## Body\n\nThis article has plenty of words to satisfy the minimum word-count check, but it deliberately omits the Source section so the validator's attribution check fails. We need at least 1500 characters of body content for the schema, so let's keep going. The content discusses AI in general terms, with multiple paragraphs of filler so the validator does not bail on length first. Generative models are evaluated on benchmarks. Benchmarks saturate over time. Researchers debate whether benchmark scores correlate with real-world capability. The video covers these debates in some detail. None of this is fabricated; it merely paraphrases mainstream commentary, but the lack of attribution is the point of this fixture. Continuing for length: agents are systems that take actions in an environment to achieve goals. Long-horizon agents must reason about uncertain outcomes. Reinforcement learning frameworks formalize this. The video closes with a recap. We do not link to it.",
+  "author": "HelpAGI Editorial Team",
+  "category": "AI",
+  "tags": ["AI", "test", "attribution"],
+  "readingMinutes": 4,
+  "focusKeyword": "test fixture",
+  "keywords": ["test", "fixture", "attribution"],
+  "contentType": "explainer",
+  "mainTopic": "Testing",
+  "complexity": "beginner",
+  "audience": "test fixture only",
+  "optimizedForScoring": true,
+  "scoringVersion": "2.0",
+  "sourceVideo": {
+    "id": "dQw4w9WgXcQ",
+    "title": "Test Video",
+    "channel": "Matt Wolfe",
+    "channelHandle": "@mreflow",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "publishedAt": "2026-04-29T18:30:00Z",
+    "durationSeconds": 600
+  },
+  "imageUrl": "https://dnsmalla.github.io/helpagi-content/images/no-attribution-article.jpg"
+}

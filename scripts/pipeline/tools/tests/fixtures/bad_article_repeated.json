@@ -1,0 +1,29 @@
+{
+  "slug": "repeated-paragraphs-article",
+  "title": "An article that repeats itself excessively for testing",
+  "date": "2026-04-30T03:00:00Z",
+  "summary": "A long-enough summary at least forty characters wide for schema reasons, used by tests.",
+  "content": "## Intro\n\nArtificial general intelligence describes a hypothetical AI system that can learn or perform any intellectual task that a human being can. The term has been used inconsistently for decades, which is part of why current debates feel so confusing.\n\n## Body part one\n\nArtificial general intelligence describes a hypothetical AI system that can learn or perform any intellectual task that a human being can. The term has been used inconsistently for decades, which is part of why current debates feel so confusing.\n\n## Body part two\n\nArtificial general intelligence describes a hypothetical AI system that can learn or perform any intellectual task that a human being can. The term has been used inconsistently for decades, which is part of why current debates feel so confusing.\n\n## Source\n\nThis article summarizes [\"Test Video\"](https://www.youtube.com/watch?v=dQw4w9WgXcQ) by Matt Wolfe (@mreflow).",
+  "author": "HelpAGI Editorial Team",
+  "category": "AI",
+  "tags": ["AI", "test", "repetition"],
+  "readingMinutes": 3,
+  "focusKeyword": "test fixture",
+  "keywords": ["test", "fixture", "repetition"],
+  "contentType": "explainer",
+  "mainTopic": "Testing",
+  "complexity": "beginner",
+  "audience": "test fixture only",
+  "optimizedForScoring": true,
+  "scoringVersion": "2.0",
+  "sourceVideo": {
+    "id": "dQw4w9WgXcQ",
+    "title": "Test Video",
+    "channel": "Matt Wolfe",
+    "channelHandle": "@mreflow",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "publishedAt": "2026-04-29T18:30:00Z",
+    "durationSeconds": 600
+  },
+  "imageUrl": "https://dnsmalla.github.io/helpagi-content/images/repeated-paragraphs-article.jpg"
+}

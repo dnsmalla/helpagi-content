@@ -1,0 +1,29 @@
+{
+  "slug": "short-article",
+  "title": "Short article that is too short to ship",
+  "date": "2026-04-30T03:00:00Z",
+  "summary": "A summary that is at least forty characters long for schema reasons.",
+  "content": "This is too short.",
+  "author": "HelpAGI Editorial Team",
+  "category": "AI",
+  "tags": ["AI", "test", "short"],
+  "readingMinutes": 2,
+  "focusKeyword": "test",
+  "keywords": ["test", "short", "fixture"],
+  "contentType": "news",
+  "mainTopic": "Testing",
+  "complexity": "beginner",
+  "audience": "test fixture only",
+  "optimizedForScoring": true,
+  "scoringVersion": "2.0",
+  "sourceVideo": {
+    "id": "dQw4w9WgXcQ",
+    "title": "Test Video",
+    "channel": "Matt Wolfe",
+    "channelHandle": "@mreflow",
+    "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "publishedAt": "2026-04-29T18:30:00Z",
+    "durationSeconds": 600
+  },
+  "imageUrl": "https://dnsmalla.github.io/helpagi-content/images/short-article.jpg"
+}
