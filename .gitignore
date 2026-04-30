@@ -4,3 +4,9 @@ node_modules/
 # Build files
 *.log
 .DS_Store
+
+# Pipeline virtualenv and caches
+scripts/pipeline/.venv/
+scripts/pipeline/__pycache__/
+scripts/pipeline/**/__pycache__/
+scripts/pipeline/.pytest_cache/
