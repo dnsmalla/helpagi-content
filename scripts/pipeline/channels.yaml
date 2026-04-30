@@ -1,0 +1,36 @@
+# Curated AI / AGI / Engineering channels. Lower priority number = higher
+# preference when more than `daily_article_cap` candidates exist on a given day.
+# Channel IDs are looked up at runtime by yt-dlp; handles are the source of truth.
+channels:
+  - priority: 1
+    name: "Matt Wolfe"
+    handle: "@mreflow"
+    type: "AI news"
+  - priority: 2
+    name: "The AI Daily Brief"
+    handle: "@AIDailyBrief"
+    type: "AI news"
+  - priority: 3
+    name: "Wes Roth"
+    handle: "@WesRothMoney"
+    type: "AI news"
+  - priority: 4
+    name: "AI Explained"
+    handle: "@aiexplained-official"
+    type: "AI deep-dive"
+  - priority: 5
+    name: "Two Minute Papers"
+    handle: "@TwoMinutePapers"
+    type: "AI research summaries"
+  - priority: 6
+    name: "Yannic Kilcher"
+    handle: "@YannicKilcher"
+    type: "AI paper deep-dives"
+  - priority: 7
+    name: "Fireship"
+    handle: "@Fireship"
+    type: "Engineering"
+  - priority: 8
+    name: "Computerphile"
+    handle: "@Computerphile"
+    type: "CS / Engineering"
