@@ -1,0 +1,33 @@
+# Pipeline runtime config. Read by the agent via the Read tool.
+
+# Set to true during shadow week. Articles are written to _proposed/<date>/
+# and committed for review, but NOT appended to articles.json.
+dry_run: true
+
+# Hard cap on new articles per run. Keeps subscription usage predictable.
+daily_article_cap: 5
+
+# yt-dlp filter: video duration in seconds.
+video_duration_min_sec: 300     # 5 min — skip Shorts and trailers
+video_duration_max_sec: 5400    # 90 min — bigger transcripts blow up context
+
+# Topic-keyword filter applied to the *title* before transcription, defense in
+# depth. Plus the validator re-checks topic relevance on the finished article.
+topic_keywords:
+  - AI
+  - AGI
+  - artificial intelligence
+  - machine learning
+  - neural
+  - LLM
+  - GPT
+  - transformer
+  - deep learning
+  - engineering
+  - software
+  - DevOps
+  - agent
+  - robotics
+
+# Manual override list. Add a video ID here to skip it in future runs.
+manual_skip_video_ids: []
