@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dnsmalla.github.io/helpagi-content/schema.json",
+  "title": "HelpAGI Article",
+  "type": "object",
+  "required": [
+    "slug", "title", "date", "summary", "content", "author", "category",
+    "tags", "readingMinutes", "focusKeyword", "keywords", "contentType",
+    "mainTopic", "complexity", "audience", "optimizedForScoring",
+    "scoringVersion", "sourceVideo", "imageUrl"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "minLength": 8, "maxLength": 90 },
+    "title": { "type": "string", "minLength": 10, "maxLength": 120 },
+    "date": { "type": "string", "format": "date-time" },
+    "summary": { "type": "string", "minLength": 40, "maxLength": 320 },
+    "content": { "type": "string", "minLength": 1500 },
+    "author": { "type": "string", "const": "HelpAGI Editorial Team" },
+    "category": { "type": "string", "enum": ["AI", "AGI", "Engineering", "Future Tech", "Tutorial"] },
+    "tags": { "type": "array", "minItems": 3, "maxItems": 10, "items": { "type": "string", "minLength": 2, "maxLength": 32 } },
+    "readingMinutes": { "type": "integer", "minimum": 2, "maximum": 30 },
+    "focusKeyword": { "type": "string", "minLength": 2, "maxLength": 60 },
+    "keywords": { "type": "array", "minItems": 3, "maxItems": 15, "items": { "type": "string" } },
+    "contentType": { "type": "string", "enum": ["explainer", "news", "tutorial", "research-summary"] },
+    "mainTopic": { "type": "string", "minLength": 2 },
+    "complexity": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+    "audience": { "type": "string", "minLength": 4 },
+    "optimizedForScoring": { "type": "boolean", "const": true },
+    "scoringVersion": { "type": "string", "const": "2.0" },
+    "sourceVideo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "channel", "channelHandle", "url", "publishedAt", "durationSeconds"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{11}$" },
+        "title": { "type": "string", "minLength": 1 },
+        "channel": { "type": "string", "minLength": 1 },
+        "channelHandle": { "type": "string", "pattern": "^@[A-Za-z0-9._-]+$" },
+        "url": { "type": "string", "pattern": "^https://www\\.youtube\\.com/watch\\?v=[A-Za-z0-9_-]{11}" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "durationSeconds": { "type": "integer", "minimum": 60, "maximum": 7200 }
+      }
+    },
+    "imageUrl": { "type": "string", "pattern": "^https://dnsmalla\\.github\\.io/helpagi-content/images/[a-z0-9-]+\\.(jpg|svg)$" }
+  }
+}
