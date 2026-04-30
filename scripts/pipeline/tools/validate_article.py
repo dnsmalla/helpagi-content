@@ -13,18 +13,7 @@ from pathlib import Path
 import jsonschema
 
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "schema.json"
-_raw_schema = json.loads(SCHEMA_PATH.read_text())
-# Remove schema-level content minLength so the validator's own word-count gate
-# is the sole content-length enforcement (avoids double-gating with different
-# units: schema uses chars, validator uses words).
-SCHEMA = {
-    **_raw_schema,
-    "properties": {
-        **_raw_schema["properties"],
-        "content": {k: v for k, v in _raw_schema["properties"]["content"].items()
-                    if k != "minLength"},
-    },
-}
+SCHEMA = json.loads(SCHEMA_PATH.read_text())
 
 MIN_WORDS = 800
 MAX_WORDS = 4000

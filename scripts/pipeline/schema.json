@@ -15,7 +15,7 @@
     "title": { "type": "string", "minLength": 10, "maxLength": 120 },
     "date": { "type": "string", "format": "date-time" },
     "summary": { "type": "string", "minLength": 40, "maxLength": 320 },
-    "content": { "type": "string", "minLength": 1500 },
+    "content": { "type": "string" },
     "author": { "type": "string", "const": "HelpAGI Editorial Team" },
     "category": { "type": "string", "enum": ["AI", "AGI", "Engineering", "Future Tech", "Tutorial"] },
     "tags": { "type": "array", "minItems": 3, "maxItems": 10, "items": { "type": "string", "minLength": 2, "maxLength": 32 } },
