@@ -85,9 +85,9 @@ If the validator returns a non-zero exit code, **drop this article and continue 
 ### 5. Image
 
 ```bash
-curl -fsSL "https://i.ytimg.com/vi/<videoId>/maxresdefault.jpg" \
+curl -fsSL --max-time 30 "https://i.ytimg.com/vi/<videoId>/maxresdefault.jpg" \
   -o "images/<slug>.jpg" \
-  || curl -fsSL "https://i.ytimg.com/vi/<videoId>/hqdefault.jpg" \
+  || curl -fsSL --max-time 30 "https://i.ytimg.com/vi/<videoId>/hqdefault.jpg" \
        -o "images/<slug>.jpg"
 ```
 
@@ -121,6 +121,15 @@ git push origin main
 Stop after publishing/proposing up to `daily_article_cap` articles, OR after exhausting all candidates, OR after a hard error (e.g. `git push` fails).
 
 Print a one-paragraph summary to stdout: how many candidates discovered, how many published, how many skipped and why.
+
+## Failure modes you must handle
+
+- **`yt-dlp` returns 0 candidates for all 8 channels.** Normal on quiet days. Stop with summary "0 articles published; 0 candidates discovered". Do NOT invent filler content.
+- **`yt-dlp` rate-limited (HTTP 429) on a channel.** Skip that channel for this run; continue with the others. Do not retry within the same run.
+- **Captions exist but in a non-`en` tag** (e.g., `en-US`, `en-GB`, `en-orig`). Try those next; if all English variants fail, skip the video.
+- **`curl` for the thumbnail times out (after `--max-time 30`).** Skip the video; do not publish without an image.
+- **`git push` is rejected because the remote moved during the run.** Run `git pull --rebase origin main` once, then retry the push. If the rebase produces conflicts, abort with summary "publish failed: remote diverged".
+- **`tools.validate_article` rejects an article.** Drop it, log the rejection reason, and move to the next candidate. Never edit the article to "make it pass."
 
 ## Hard rules
 
