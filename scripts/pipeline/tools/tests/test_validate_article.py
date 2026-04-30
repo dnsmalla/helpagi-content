@@ -50,3 +50,8 @@ def test_off_topic_rejected():
     bad["content"] = bad["content"].replace("AGI", "sourdough").replace("AI", "yeast")
     with pytest.raises(ValidationError, match="off-topic"):
         validate_article(bad)
+
+
+def test_empty_heading_rejected():
+    with pytest.raises(ValidationError, match="empty heading"):
+        validate_article(load("bad_article_empty_heading.json"))

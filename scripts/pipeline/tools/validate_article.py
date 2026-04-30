@@ -45,10 +45,35 @@ def _paragraphs(text: str) -> list[str]:
 def _has_attribution(article: dict) -> bool:
     content = article.get("content", "")
     sv = article.get("sourceVideo", {})
-    if "youtube.com/watch?v=" not in content:
+    url = sv.get("url", "")
+    if not url or url not in content:
         return False
     channel = sv.get("channel", "")
     return bool(channel) and channel in content
+
+
+def _has_empty_headings(text: str) -> bool:
+    """Return True if any Markdown heading has no content before the next heading."""
+    lines = text.splitlines()
+    heading_pattern = re.compile(r"^#{1,6} ")
+    i = 0
+    while i < len(lines):
+        if heading_pattern.match(lines[i]):
+            # Look ahead for a non-empty, non-heading line before the next heading
+            j = i + 1
+            found_content = False
+            while j < len(lines):
+                stripped = lines[j].strip()
+                if heading_pattern.match(lines[j]):
+                    break
+                if stripped:
+                    found_content = True
+                    break
+                j += 1
+            if not found_content:
+                return True
+        i += 1
+    return False
 
 
 def _on_topic(article: dict) -> bool:
@@ -95,6 +120,10 @@ def validate_article(article: dict) -> None:
     # 4. Duplicate paragraphs.
     if _has_duplicate_paragraphs(article.get("content", "")):
         raise ValidationError("duplicate paragraphs detected (likely AI repetition)")
+
+    # 4b. Empty headings.
+    if _has_empty_headings(article.get("content", "")):
+        raise ValidationError("empty heading detected")
 
     # 5. Topic relevance.
     if not _on_topic(article):
