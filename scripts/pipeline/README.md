@@ -1,9 +1,9 @@
 # HelpAGI Content Pipeline
 
-Daily, subscription-powered automation that turns AI/AGI/engineering YouTube uploads into validated articles in `articles.json`. Consumed by the HelpAGI iOS app and (later) the web app.
+Subscription-powered automation that turns AI/AGI/engineering YouTube uploads into validated articles in `articles.json`. Consumed by the HelpAGI iOS app and (later) the web app.
 
 - **Spec:** `../../docs/superpowers/specs/2026-04-30-auto-content-pipeline-design.md` in the iOS-app repo.
-- **Architecture:** Claude Code agent runs **locally** on your machine via the `claude` CLI you're already logged into. No OAuth token, no API key, nothing in the repo. Auth is whatever your local `claude` is using — typically your Claude Pro/Max subscription session.
+- **Architecture:** Claude Code agent runs **manually from a Terminal** via the `claude` CLI you're already logged into. No OAuth token, no API key, nothing in the repo, no daemon. Auth is whatever your local `claude` is using — typically your Claude Pro/Max subscription session. Run it whenever you want fresh content.
 
 ## Files
 
@@ -52,45 +52,18 @@ The script will:
 
 `config.yaml`'s `dry_run: true` (default) sends proposed articles to `_proposed/<date>/<slug>.json` instead of appending to `articles.json`. Flip to `false` once you trust the output.
 
-## Scheduling daily runs
+## Why no daemon / cron / launchd
 
-### macOS (launchd)
+Earlier versions of this README included a launchd plist for daily 04:00 runs. We dropped it: macOS TCC blocks launchd-spawned `bash` from reading `~/Desktop` (the `Operation not permitted` failure mode), and the alternatives (granting Full Disk Access to `/bin/bash`, moving the project off Desktop) were either invasive or destructive.
 
-A ready-to-use launch agent ships with the repo at [blog.helpagi.pipeline.plist](blog.helpagi.pipeline.plist). It runs `run.sh` daily at **04:00 local time** and writes logs to `~/Library/Logs/helpagi-pipeline.{log,err}`.
+**The pipeline is invoked manually from Terminal**, on the cadence you choose — once a day, several times a week, on demand, whatever. Terminal already has the file-access privileges the pipeline needs, so nothing extra to configure.
 
-Install:
-```bash
-cp scripts/pipeline/blog.helpagi.pipeline.plist ~/Library/LaunchAgents/
-launchctl load -w ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
-launchctl list | grep helpagi      # should show the label
-```
+If you ever want to bring scheduling back:
 
-Test it once now (without waiting for 04:00):
-```bash
-launchctl start blog.helpagi.pipeline
-tail -f ~/Library/Logs/helpagi-pipeline.log
-```
+- **macOS:** move the project to a non-TCC-protected directory (`~/code/`, `~/work/`, anywhere outside `~/Desktop` / `~/Documents` / `~/Downloads`) and reintroduce a launchd plist pointing at the new path. Or grant Full Disk Access to `/bin/bash` (System Settings → Privacy & Security → Full Disk Access) and add the plist back unchanged.
+- **Linux:** `crontab -e` and add `0 4 * * * /bin/bash /path/to/helpagi-content/scripts/pipeline/run.sh >> ~/helpagi-pipeline.log 2>&1`. Make sure the cron `PATH` includes `claude`'s directory.
 
-Disable / remove later:
-```bash
-launchctl unload ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
-rm ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
-```
-
-The plist hard-codes my paths — if you move the repo or run it on another machine, edit `ProgramArguments`, `WorkingDirectory`, `EnvironmentVariables.HOME`, and the log paths to match.
-
-### Linux (cron)
-
-```bash
-crontab -e
-# Add:
-0 9 * * * /bin/bash /home/YOU/path/to/helpagi-content/scripts/pipeline/run.sh \
-  >> /tmp/helpagi-pipeline.log 2>&1
-```
-
-> **Important for cron:** cron runs with a minimal `PATH`. Make sure the path in your crontab includes the directory where `claude` lives (`which claude` shows you). The launchd plist above already does this via `EnvironmentVariables`.
-
-> **Computer must be awake** at the scheduled time. macOS users on laptops: consider `caffeinate -s` or just run on a desktop / always-on Mac mini.
+In either case, the computer needs to be awake at the firing time.
 
 ## Manual sub-commands (for testing)
 
