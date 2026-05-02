@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>blog.helpagi.pipeline</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/dinsmallade/Desktop/auto_sys/swift_apps/auto_swift_helpagi/helpagi-content/scripts/pipeline/run.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/dinsmallade/Desktop/auto_sys/swift_apps/auto_swift_helpagi/helpagi-content</string>
+
+    <!-- Daily at 04:00 local time. -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key><integer>4</integer>
+        <key>Minute</key><integer>0</integer>
+    </dict>
+
+    <!-- Required so cron-style runs find `claude`, `git`, `python3`, etc. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/Users/dinsmallade/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>HOME</key>
+        <string>/Users/dinsmallade</string>
+    </dict>
+
+    <!-- Logs land outside the repo so they don't get committed. -->
+    <key>StandardOutPath</key>
+    <string>/Users/dinsmallade/Library/Logs/helpagi-pipeline.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/dinsmallade/Library/Logs/helpagi-pipeline.err</string>
+
+    <!-- If the laptop is asleep at 04:00, run as soon as it wakes up. -->
+    <key>StartCalendarIntervalRunAtLoad</key>
+    <false/>
+</dict>
+</plist>

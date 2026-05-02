@@ -56,45 +56,28 @@ The script will:
 
 ### macOS (launchd)
 
-Save this as `~/Library/LaunchAgents/blog.helpagi.pipeline.plist` and adjust paths:
+A ready-to-use launch agent ships with the repo at [blog.helpagi.pipeline.plist](blog.helpagi.pipeline.plist). It runs `run.sh` daily at **04:00 local time** and writes logs to `~/Library/Logs/helpagi-pipeline.{log,err}`.
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key>
-  <string>blog.helpagi.pipeline</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/bin/bash</string>
-    <string>/Users/YOU/path/to/helpagi-content/scripts/pipeline/run.sh</string>
-  </array>
-  <key>StartCalendarInterval</key>
-  <dict>
-    <key>Hour</key><integer>9</integer>
-    <key>Minute</key><integer>0</integer>
-  </dict>
-  <key>StandardOutPath</key>
-  <string>/tmp/helpagi-pipeline.log</string>
-  <key>StandardErrorPath</key>
-  <string>/tmp/helpagi-pipeline.err</string>
-  <key>EnvironmentVariables</key>
-  <dict>
-    <key>PATH</key>
-    <string>/Users/YOU/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
-  </dict>
-</dict>
-</plist>
-```
-
-Load it:
+Install:
 ```bash
-launchctl load ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
-launchctl start blog.helpagi.pipeline    # run once now to test
-tail -f /tmp/helpagi-pipeline.log         # watch output
+cp scripts/pipeline/blog.helpagi.pipeline.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
+launchctl list | grep helpagi      # should show the label
 ```
+
+Test it once now (without waiting for 04:00):
+```bash
+launchctl start blog.helpagi.pipeline
+tail -f ~/Library/Logs/helpagi-pipeline.log
+```
+
+Disable / remove later:
+```bash
+launchctl unload ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
+rm ~/Library/LaunchAgents/blog.helpagi.pipeline.plist
+```
+
+The plist hard-codes my paths — if you move the repo or run it on another machine, edit `ProgramArguments`, `WorkingDirectory`, `EnvironmentVariables.HOME`, and the log paths to match.
 
 ### Linux (cron)
 
