@@ -7,12 +7,19 @@ dry_run: true
 # Hard cap on new articles per run. Keeps subscription usage predictable.
 daily_article_cap: 5
 
+# Per-article web-research budget: max number of WebFetch calls the agent
+# may make while filling in factual gaps the transcript doesn't cover.
+# Lower = leaner runs, fewer references; higher = better-researched articles
+# at higher token cost.
+research_budget: 4
+
 # yt-dlp filter: video duration in seconds.
 video_duration_min_sec: 300     # 5 min — skip Shorts and trailers
 video_duration_max_sec: 5400    # 90 min — bigger transcripts blow up context
 
-# Topic-keyword filter applied to the *title* before transcription, defense in
-# depth. Plus the validator re-checks topic relevance on the finished article.
+# Topic-keyword filter. Single source of truth: read by the agent (title-stage
+# filter, substring case-insensitive) and by tools/validate_article.py
+# (post-write filter, whole-word case-insensitive on title + first ~200 words).
 topic_keywords:
   - AI
   - AGI
@@ -26,6 +33,7 @@ topic_keywords:
   - engineering
   - software
   - DevOps
+  - compiler
   - agent
   - robotics
 

@@ -73,7 +73,7 @@ echo "→ Running pipeline agent…"
 claude \
     --print \
     --dangerously-skip-permissions \
-    --allowedTools "Bash,Read,Write,Edit" \
+    --allowedTools "Bash,Read,Write,Edit,WebSearch,WebFetch" \
     "$(cat scripts/pipeline/agent-prompt.md)"
 
 # --- Final state -------------------------------------------------------------

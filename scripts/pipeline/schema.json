@@ -42,6 +42,21 @@
         "durationSeconds": { "type": "integer", "minimum": 60, "maximum": 7200 }
       }
     },
-    "imageUrl": { "type": "string", "pattern": "^https://dnsmalla\\.github\\.io/helpagi-content/images/[a-z0-9-]+\\.(jpg|svg)$" }
+    "imageUrl": { "type": "string", "pattern": "^https://dnsmalla\\.github\\.io/helpagi-content/images/[a-z0-9-]+\\.(jpg|svg)$" },
+    "references": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "url", "accessedAt"],
+        "properties": {
+          "title": { "type": "string", "minLength": 4, "maxLength": 200 },
+          "url": { "type": "string", "pattern": "^https?://[^\\s]+$" },
+          "accessedAt": { "type": "string", "format": "date" }
+        }
+      }
+    }
   }
 }
