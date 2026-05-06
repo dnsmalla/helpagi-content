@@ -10,3 +10,6 @@ scripts/pipeline/.venv/
 scripts/pipeline/__pycache__/
 scripts/pipeline/**/__pycache__/
 scripts/pipeline/.pytest_cache/
+
+# Pipeline orchestrator scratch (lock file, candidates.json, runlog-*.json)
+scripts/pipeline/.run/

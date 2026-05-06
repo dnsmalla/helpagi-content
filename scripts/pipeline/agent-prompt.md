@@ -29,24 +29,32 @@ If `dry_run` is `false`:
 
 ## Procedure
 
-### 1. Discover
+### 1. Read prepared candidates
 
-For each channel in `channels.yaml` (in priority order), run:
+Discovery has already been done for you by the Python orchestrator (`scripts/pipeline/runner.py`). Read the prepared candidate list:
 
-```bash
-yt-dlp \
-  --print '%(id)s\t%(title)s\t%(upload_date)s\t%(duration)s\t%(channel)s\t%(webpage_url)s' \
-  --dateafter "now-1day" \
-  --match-filter "duration > 300 & duration < 5400" \
-  --no-warnings --skip-download --quiet \
-  "https://www.youtube.com/<HANDLE>/videos"
+```
+scripts/pipeline/.run/candidates.json
 ```
 
-Drop:
-- Video IDs in `.pipeline-state.json:processed_video_ids` or `config.yaml:manual_skip_video_ids`.
-- Videos whose **title** contains none of `config.yaml:topic_keywords` (case-insensitive substring).
+Each entry has the shape:
 
-Truncate the surviving list to `daily_article_cap` items by channel priority (priority 1 first, ties broken by longer duration).
+```json
+{
+  "id": "<11-char video id>",
+  "title": "<video title>",
+  "channel": "<channel name>",
+  "channelHandle": "@handle",
+  "url": "https://www.youtube.com/watch?v=<id>",
+  "publishedAt": "<ISO8601 UTC>",
+  "durationSeconds": <int>,
+  "channelPriority": <int>
+}
+```
+
+The list is **already filtered and sorted** — already-processed IDs, manual skips, off-topic titles, and out-of-window durations have been removed; ordering is channel priority asc, then duration desc; length is capped at `daily_article_cap`.
+
+If the file is missing or empty, stop with summary "0 articles published; no candidates discovered". Do **not** run `yt-dlp` yourself.
 
 ### 2. Transcribe
 

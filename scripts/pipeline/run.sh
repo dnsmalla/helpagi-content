@@ -63,18 +63,13 @@ if ! command -v yt-dlp >/dev/null 2>&1; then
     echo "WARN: yt-dlp still not on PATH. Agent may fail at the discovery step." >&2
 fi
 
-# --- Run the agent -----------------------------------------------------------
-# Tool surface is restricted to Bash/Read/Write/Edit and the repo root.
-# --dangerously-skip-permissions is needed for an unattended (cron/launchd)
-# run — without it, every Bash + Edit prompts for confirmation. Safe in this
-# context: the agent can only operate inside this repo and push to its own
-# `origin`. If you'd rather approve each step interactively, drop that flag.
-echo "→ Running pipeline agent…"
-claude \
-    --print \
-    --dangerously-skip-permissions \
-    --allowedTools "Bash,Read,Write,Edit,WebSearch,WebFetch" \
-    "$(cat scripts/pipeline/agent-prompt.md)"
+# --- Run the orchestrator ----------------------------------------------------
+# Phase 1: Python orchestrator owns lock acquisition, discovery (yt-dlp), and
+# the per-run JSON log under scripts/pipeline/.run/. The orchestrator then
+# invokes the Claude Code agent with the prepared candidates.json. The agent
+# still does transcribe / write / validate / publish — phase 2 narrows that.
+echo "→ Running pipeline orchestrator…"
+( cd scripts/pipeline && .venv/bin/python3 runner.py )
 
 # --- Final state -------------------------------------------------------------
 echo
